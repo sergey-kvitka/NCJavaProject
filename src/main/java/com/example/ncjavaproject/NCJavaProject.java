@@ -1,28 +1,19 @@
-package com.example;
+package com.example.ncjavaproject;
 
-import com.example.Models.Attribute;
-import com.example.Models.ObjectDB;
-import com.example.Models.Value;
-import com.example.Repos.AttributeRepository;
-import com.example.Repos.ObjectRepository;
-import com.example.Repos.ValueRepository;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
-public class ObjectsJavaProjectApplication {
+@EnableJpaRepositories
+public class NCJavaProject {
 
     public static void main(String[] args) {
-        SpringApplication.run(ObjectsJavaProjectApplication.class, args);
+        SpringApplication.run(NCJavaProject.class, args);
     }
 
-
-    @Bean
+        /*@Bean
     public CommandLineRunner runner(ObjectRepository objectRepository,
                                     AttributeRepository attributeRepository,
                                     ValueRepository valueRepository) {
@@ -74,5 +65,5 @@ public class ObjectsJavaProjectApplication {
             }
 
         };
-    }
+    }*/
 }

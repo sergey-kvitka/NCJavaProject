@@ -1,4 +1,4 @@
-package com.example.Models;
+package com.example.ncjavaproject.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,6 +27,10 @@ public class Attribute {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -49,5 +53,15 @@ public class Attribute {
 
     public void setObjectId(Integer objectId) {
         this.objectId = objectId;
+    }
+
+    @Override
+    public String toString() {
+        return "Attribute{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", objectId=" + objectId +
+                ", valueId=" + valueId +
+                '}';
     }
 }

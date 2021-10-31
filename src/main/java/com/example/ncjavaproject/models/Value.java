@@ -1,4 +1,4 @@
-package com.example.Models;
+package com.example.ncjavaproject.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +31,10 @@ public class Value {
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getValue() {

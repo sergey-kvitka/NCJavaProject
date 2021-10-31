@@ -1,6 +1,6 @@
-package com.example.Repos;
+package com.example.ncjavaproject.repositories;
 
-import com.example.Models.Value;
+import com.example.ncjavaproject.models.Value;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ValueRepository extends CrudRepository<Value, Integer> {
