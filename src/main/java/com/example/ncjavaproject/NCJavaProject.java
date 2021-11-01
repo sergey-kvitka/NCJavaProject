@@ -12,7 +12,7 @@ public class NCJavaProject {
     public static void main(String[] args) {
         SpringApplication.run(NCJavaProject.class, args);
     }
-
+}
         /*@Bean
     public CommandLineRunner runner(ObjectRepository objectRepository,
                                     AttributeRepository attributeRepository,
@@ -66,4 +66,4 @@ public class NCJavaProject {
 
         };
     }*/
-}
+

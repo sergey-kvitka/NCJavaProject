@@ -4,13 +4,7 @@ import com.example.ncjavaproject.exceptions.NotFoundException;
 import com.example.ncjavaproject.models.Attribute;
 import com.example.ncjavaproject.repositories.AttributeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Stream;
 
 
 @RestController
@@ -31,7 +25,7 @@ public class AttributeController {
                 .findById(Integer.parseInt(id))
                 .orElseThrow(NotFoundException::new);
     }
-
+    //
     @PostMapping
     public Attribute create(@RequestBody Attribute attribute) {
         return attributeRepository.save(attribute);
