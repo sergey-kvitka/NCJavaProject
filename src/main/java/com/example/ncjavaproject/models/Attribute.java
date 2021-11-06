@@ -1,33 +1,56 @@
 package com.example.ncjavaproject.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.example.ncjavaproject.repositories.DBComponent;
+import com.sun.istack.NotNull;
+
+import javax.persistence.*;
 
 @Entity
 public class Attribute {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
 
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(nullable = false)
     private String name;
-    private Integer objectId;
-    private Integer valueId;
 
-    public Attribute() { }
+    @Column(nullable = false, name = "attribute_type_id")
+    private Long attributeTypeId;
 
-    public Attribute(String name, Integer objectId, Integer valueId) {
+    @Column(nullable = false, name = "object_type_id")
+    private Long objectTypeId;
+
+    public Attribute(){}
+
+    public Attribute(String name, @NotNull AttributeType attributeType, @NotNull ObjectType objectType) {
         this.name = name;
-        this.objectId = objectId;
-        this.valueId = valueId;
+        attributeTypeId = attributeType.getId();
+        objectTypeId = objectType.getId();
     }
 
-    public Integer getId() {
+    public Attribute(String name, Long attributeTypeId, Long objectTypeId) {
+        this.name = name;
+        this.attributeTypeId = attributeTypeId;
+        this.objectTypeId = objectTypeId;
+    }
+
+    public Attribute(@NotNull LightAttribute lightAttribute, @NotNull ObjectType objectType) {
+        objectTypeId = objectType.getId();
+        this.name = lightAttribute.getName();
+        attributeTypeId = lightAttribute.getAttributeTypeId();
+    }
+
+    public Attribute(@NotNull LightAttribute lightAttribute, @NotNull Long objectTypeId) {
+        this.objectTypeId = objectTypeId;
+        this.name = lightAttribute.getName();
+        attributeTypeId = lightAttribute.getAttributeTypeId();
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -39,29 +62,28 @@ public class Attribute {
         this.name = name;
     }
 
-    public Integer getValueId() {
-        return valueId;
+    public Long getAttributeTypeId() {
+        return attributeTypeId;
     }
 
-    public void setValueId(Integer valueId) {
-        this.valueId = valueId;
+    public void setAttributeTypeId(Long attributeTypeId) {
+        this.attributeTypeId = attributeTypeId;
     }
 
-    public Integer getObjectId() {
-        return objectId;
+    public Long getObjectTypeId() {
+        return objectTypeId;
     }
 
-    public void setObjectId(Integer objectId) {
-        this.objectId = objectId;
+    public void setObjectTypeId(Long objectTypeId) {
+        this.objectTypeId = objectTypeId;
     }
 
-    @Override
-    public String toString() {
-        return "Attribute{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", objectId=" + objectId +
-                ", valueId=" + valueId +
-                '}';
+    public DBComponent DBComponent() {
+        return new DBComponent();
     }
+
+//    public AttributeType.Type getAttributeType() {
+//        AttributeType attributeType = DBComponent().attributeTypeRepository.findById(attributeTypeId).orElseThrow();
+//        return AttributeType.Type.valueOf(attributeType.getName());
+//    }
 }

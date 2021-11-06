@@ -1,40 +1,73 @@
 package com.example.ncjavaproject.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.sun.istack.NotNull;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-public class Value {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+public class Value implements DBValue {
 
-    private String name;
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(nullable = false, name = "object_id")
+    private Long objectId;
+
+    @Column(nullable = false, name = "attribute_id")
+    private Long attributeId;
+
+    @Column
     private String value;
 
-    public Value() { }
+    @Column(name = "date_value")
+    private Date dateValue;
 
-    public Value(String name, int value) {
-        this.name = name;
-        this.value = "" + value;
+    public Value(){}
+
+    public Value(Long objectId, Long attributeId, String value, Date dateValue) {
+        this.objectId = objectId;
+        this.attributeId = attributeId;
+        if (value != null)
+            this.value = value;
+        else
+            this.dateValue = dateValue;
     }
-    public Value(String name, double value) {
-        this.name = name;
-        this.value = "" + value;
-    }
-    public Value(String name, String value) {
-        this.name = name;
+
+    public Value(@NotNull ObjectDB object, @NotNull Attribute attribute, String value) {
+        objectId = object.getId();
+        attributeId = attribute.getId();
         this.value = value;
     }
 
-    public Integer getId() {
+    public Value(@NotNull ObjectDB object, @NotNull Attribute attribute, @NotNull Date dateValue) {
+        objectId = object.getId();
+        attributeId = attribute.getId();
+        this.dateValue = dateValue;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(Long objectId) {
+        this.objectId = objectId;
+    }
+
+    public Long getAttributeId() {
+        return attributeId;
+    }
+
+    public void setAttributeId(Long attributeId) {
+        this.attributeId = attributeId;
     }
 
     public String getValue() {
@@ -45,11 +78,16 @@ public class Value {
         this.value = value;
     }
 
-    public String getName() {
-        return name;
+    public Date getDateValue() {
+        return dateValue;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDateValue(Date dateValue) {
+        this.dateValue = dateValue;
+    }
+
+    @Override
+    public AttributeType.Type valueType() {
+        return AttributeType.Type.TEXT;
     }
 }

@@ -1,8 +1,13 @@
 package com.example.ncjavaproject.repositories;
 
+import com.example.ncjavaproject.models.Attribute;
 import com.example.ncjavaproject.models.ObjectDB;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
-public interface ObjectRepository extends CrudRepository<ObjectDB, Integer> {}
+import java.util.List;
+
+
+public interface ObjectRepository extends CrudRepository<ObjectDB, Long> {
+    List<ObjectDB> findAllByParentObjectId(Long id);
+}

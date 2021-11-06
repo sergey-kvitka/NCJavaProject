@@ -6,56 +6,41 @@ import com.example.ncjavaproject.repositories.AttributeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
-@RequestMapping("attribute")
+@RequestMapping("attributes")
 public class AttributeController {
-
     @Autowired
-    private AttributeRepository attributeRepository;
+    AttributeRepository attributeRepository;
 
     @GetMapping
-    public Iterable<Attribute> getAll() {
+    public Iterable<Attribute> getAttributes() {
         return attributeRepository.findAll();
     }
 
     @GetMapping("{id}")
-    public Attribute get(@PathVariable String id) {
+    public Attribute get(@PathVariable Long id) {
         return attributeRepository
-                .findById(Integer.parseInt(id))
+                .findById(id)
                 .orElseThrow(NotFoundException::new);
     }
-    //
+
     @PostMapping
     public Attribute create(@RequestBody Attribute attribute) {
-        return attributeRepository.save(attribute);
+        return attributeRepository.save(new Attribute(
+                attribute.getName(),
+                attribute.getAttributeTypeId(),
+                attribute.getObjectTypeId()
+        ));
     }
 
     @PutMapping("{id}")
-    public Attribute update(@PathVariable String id, @RequestBody Attribute attribute) {
-        attribute.setId(Integer.parseInt(id));
-        get(id);
+    public Attribute update(@PathVariable Long id, @RequestBody Attribute attribute) {
+        attribute.setId(id); get(id);
         return attributeRepository.save(attribute);
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable String id) {
-        get(id);
-        attributeRepository.deleteById(Integer.parseInt(id));
+    public void delete(@PathVariable Long id) {
+        get(id); attributeRepository.deleteById(id);
     }
-
 }
-/*
-Добавил рест контроллер и протестировал на нём несколько команд в браузерной консоли:
-
-fetch('/attribute', {method: 'POST', headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({name: 'testAttr', "objectId": 2, "valueId": 3})})
-    .then(r => console.log(r))
-
-fetch('/attribute/34', {method: 'PUT', headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({"id": 100, "name": "testAttr(updated)", "objectId": 2, "valueId": 4 })})
-    .then(r => console.log(r))
-
-
-fetch('/attribute/34', {method: 'DELETE'}).then(r => console.log(r))
-* */
