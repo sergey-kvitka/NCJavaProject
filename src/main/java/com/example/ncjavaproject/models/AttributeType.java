@@ -1,10 +1,14 @@
 package com.example.ncjavaproject.models;
 
 import com.sun.istack.NotNull;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity(name = "attribute_type")
+@NoArgsConstructor
+@Builder
 public class AttributeType {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -12,9 +16,6 @@ public class AttributeType {
 
     @Column(nullable = false)
     private String name;
-
-    public AttributeType(){
-    }
 
     public AttributeType(@NotNull Type attributeTypeName) {
         name = attributeTypeName.name();

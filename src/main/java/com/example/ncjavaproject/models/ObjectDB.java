@@ -3,6 +3,10 @@ package com.example.ncjavaproject.models;
 import com.example.ncjavaproject.repositories.DBComponent;
 import com.example.ncjavaproject.repositories.ObjectTypeRepository;
 import com.sun.istack.NotNull;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -10,8 +14,11 @@ import org.springframework.stereotype.Service;
 import javax.persistence.*;
 import java.util.*;
 
-@Component
 @Entity(name = "object")
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
 public class ObjectDB {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,8 +32,6 @@ public class ObjectDB {
 
     @Column(name = "parent_object_id")
     private Long parentObjectId = null;
-
-    public ObjectDB(){}
 
     public ObjectDB(@NotNull String name, @NotNull ObjectType objectType) {
         this.name = name;
@@ -43,40 +48,6 @@ public class ObjectDB {
         objectTypeId = objectType.getId();
         parentObjectId = parentObject.getId();
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getObjectTypeId() {
-        return objectTypeId;
-    }
-
-    public void setObjectTypeId(Long objectTypeId) {
-        this.objectTypeId = objectTypeId;
-    }
-
-    public Long getParentObjectId() {
-        return parentObjectId;
-    }
-
-    public void setParentObjectId(Long parentObjectId) {
-        this.parentObjectId = parentObjectId;
-    }
-
-
 
 //    public ObjectType getObjectType() {
 //        return DBComponent.objectTypeRepository().findById(objectTypeId).orElseThrow();
@@ -109,9 +80,7 @@ public class ObjectDB {
 //        if (attribute.getAttributeType().equals(AttributeType.Type.TEXT)) throw new IllegalArgumentException();
 //        DBComponent().linkValueRepository.save(new LinkValue(this, attribute, objectValue));
 //    }
-
-    public void addChildObject() {
-
-    }
-
+//    public void addChildObject() {
+//
+//    }
 }

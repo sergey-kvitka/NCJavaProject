@@ -1,11 +1,19 @@
 package com.example.ncjavaproject.models;
 
 import com.sun.istack.NotNull;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@NoArgsConstructor
+@Builder
+@Getter
+@Setter
 public class Value implements DBValue {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,8 +30,6 @@ public class Value implements DBValue {
 
     @Column(name = "date_value")
     private Date dateValue;
-
-    public Value(){}
 
     public Value(Long objectId, Long attributeId, String value, Date dateValue) {
         this.objectId = objectId;
@@ -43,46 +49,6 @@ public class Value implements DBValue {
     public Value(@NotNull ObjectDB object, @NotNull Attribute attribute, @NotNull Date dateValue) {
         objectId = object.getId();
         attributeId = attribute.getId();
-        this.dateValue = dateValue;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getObjectId() {
-        return objectId;
-    }
-
-    public void setObjectId(Long objectId) {
-        this.objectId = objectId;
-    }
-
-    public Long getAttributeId() {
-        return attributeId;
-    }
-
-    public void setAttributeId(Long attributeId) {
-        this.attributeId = attributeId;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public Date getDateValue() {
-        return dateValue;
-    }
-
-    public void setDateValue(Date dateValue) {
         this.dateValue = dateValue;
     }
 

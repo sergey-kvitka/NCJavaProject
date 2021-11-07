@@ -1,10 +1,18 @@
 package com.example.ncjavaproject.models;
 
 import com.sun.istack.NotNull;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
 public class LinkValue implements DBValue {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,8 +27,6 @@ public class LinkValue implements DBValue {
     @Column(nullable = false, name = "value_object_id")
     private Long valueObjectId;
 
-    public LinkValue(){}
-
     public LinkValue(@NotNull Long objectId, @NotNull Long attributeId, @NotNull Long valueObjectId) {
         this.objectId = objectId;
         this.attributeId = attributeId;
@@ -31,38 +37,6 @@ public class LinkValue implements DBValue {
         objectId = object.getId();
         attributeId = attribute.getId();
         valueObjectId = valueObject.getId();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getObjectId() {
-        return objectId;
-    }
-
-    public void setObjectId(Long objectId) {
-        this.objectId = objectId;
-    }
-
-    public Long getAttributeId() {
-        return attributeId;
-    }
-
-    public void setAttributeId(Long attributeId) {
-        this.attributeId = attributeId;
-    }
-
-    public Long getValueObjectId() {
-        return valueObjectId;
-    }
-
-    public void setValueObjectId(Long valueObjectId) {
-        this.valueObjectId = valueObjectId;
     }
 
     @Override

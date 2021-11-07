@@ -1,11 +1,17 @@
 package com.example.ncjavaproject.models;
 
-import com.example.ncjavaproject.repositories.DBComponent;
 import com.sun.istack.NotNull;
-
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
 public class Attribute {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,8 +25,6 @@ public class Attribute {
 
     @Column(nullable = false, name = "object_type_id")
     private Long objectTypeId;
-
-    public Attribute(){}
 
     public Attribute(String name, @NotNull AttributeType attributeType, @NotNull ObjectType objectType) {
         this.name = name;
@@ -44,42 +48,6 @@ public class Attribute {
         this.objectTypeId = objectTypeId;
         this.name = lightAttribute.getName();
         attributeTypeId = lightAttribute.getAttributeTypeId();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getAttributeTypeId() {
-        return attributeTypeId;
-    }
-
-    public void setAttributeTypeId(Long attributeTypeId) {
-        this.attributeTypeId = attributeTypeId;
-    }
-
-    public Long getObjectTypeId() {
-        return objectTypeId;
-    }
-
-    public void setObjectTypeId(Long objectTypeId) {
-        this.objectTypeId = objectTypeId;
-    }
-
-    public DBComponent DBComponent() {
-        return new DBComponent();
     }
 
 //    public AttributeType.Type getAttributeType() {

@@ -3,6 +3,7 @@ package com.example.ncjavaproject;
 import com.example.ncjavaproject.models.Attribute;
 import com.example.ncjavaproject.models.AttributeType;
 import com.example.ncjavaproject.models.ObjectType;
+import com.example.ncjavaproject.models.Value;
 import com.example.ncjavaproject.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,6 +20,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class NCJavaProject {
 
     public static void main(String[] args) {
+
         SpringApplication.run(NCJavaProject.class, args);
     }
 

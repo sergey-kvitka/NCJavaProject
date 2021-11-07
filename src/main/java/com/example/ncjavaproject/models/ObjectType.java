@@ -1,14 +1,17 @@
 package com.example.ncjavaproject.models;
 
-import com.example.ncjavaproject.repositories.DBComponent;
 import com.sun.istack.NotNull;
-
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Entity(name = "object_type")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
 public class ObjectType {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,8 +23,6 @@ public class ObjectType {
     @Column(name = "parent_object_type_id")
     private Long parentObjectTypeId = null;
 
-    public ObjectType(){}
-
     public ObjectType(String name) {
         this.name = name;
     }
@@ -31,33 +32,7 @@ public class ObjectType {
         parentObjectTypeId = parentObjectType.getId();
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getParentObjectTypeId() {
-        return parentObjectTypeId;
-    }
-
-    public void setParentObjectTypeId(Long parentObjectTypeId) {
-        this.parentObjectTypeId = parentObjectTypeId;
-    }
-
-    public DBComponent DBComponent() {
-        return new DBComponent();
-    }
 
 //    public List<Attribute> getAttributes() {
 //        return DBComponent().attributeRepository.findAllByObjectTypeId(id);
