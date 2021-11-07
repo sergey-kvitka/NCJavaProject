@@ -5,12 +5,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import javax.persistence.*;
 
 @Entity(name = "object_type")
 @Getter
 @Setter
-@Builder
+@CrossOrigin
 @NoArgsConstructor
 public class ObjectType {
 
@@ -31,9 +33,6 @@ public class ObjectType {
         this.name = name;
         parentObjectTypeId = parentObjectType.getId();
     }
-
-
-
 //    public List<Attribute> getAttributes() {
 //        return DBComponent().attributeRepository.findAllByObjectTypeId(id);
 //    }
@@ -73,6 +72,4 @@ public class ObjectType {
 //                new ObjectType(childObjectTypeName, this));
 //
 //    }
-
-
  }

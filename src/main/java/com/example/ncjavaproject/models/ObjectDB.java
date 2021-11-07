@@ -1,23 +1,18 @@
 package com.example.ncjavaproject.models;
 
-import com.example.ncjavaproject.repositories.DBComponent;
-import com.example.ncjavaproject.repositories.ObjectTypeRepository;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
-import java.util.*;
 
 @Entity(name = "object")
 @Setter
 @Getter
-@Builder
+@CrossOrigin
 @NoArgsConstructor
 public class ObjectDB {
 

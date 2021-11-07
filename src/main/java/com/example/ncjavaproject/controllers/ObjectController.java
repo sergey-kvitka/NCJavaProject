@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.Access;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("objects")
 public class ObjectController {
     @Autowired

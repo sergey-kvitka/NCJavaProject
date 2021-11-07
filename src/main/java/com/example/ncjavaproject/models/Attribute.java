@@ -5,13 +5,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import javax.persistence.*;
 
 @Entity
 @Setter
 @Getter
-@Builder
 @NoArgsConstructor
+@CrossOrigin
 public class Attribute {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)

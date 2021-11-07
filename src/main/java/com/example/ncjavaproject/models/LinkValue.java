@@ -5,13 +5,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
-@Builder
+@CrossOrigin
 @NoArgsConstructor
 public class LinkValue implements DBValue {
 

@@ -5,15 +5,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @NoArgsConstructor
-@Builder
 @Getter
 @Setter
+@CrossOrigin
 public class Value implements DBValue {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
