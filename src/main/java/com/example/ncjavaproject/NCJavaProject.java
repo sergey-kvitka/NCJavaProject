@@ -21,7 +21,7 @@ public class NCJavaProject {
         SpringApplication.run(NCJavaProject.class, args);
     }
 
-    @Bean
+//    @Bean
     public CommandLineRunner runner(
             @Autowired AttributeRepository attributeRepository,
             @Autowired AttributeTypeRepository attributeTypeRepository,
@@ -43,6 +43,7 @@ public class NCJavaProject {
 
 //            objectTypeRepository.deleteAll();
 //            objectRepository.deleteAll();
+//            objectRepository.deleteById(68L);
         };
     }
 

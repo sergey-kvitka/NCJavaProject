@@ -44,6 +44,12 @@ public class ObjectDB {
         parentObjectId = parentObject.getId();
     }
 
+    public ObjectDB(@NotNull String name, @NotNull Long objectTypeId, @NotNull Long parentObjectId) {
+        this.name = name;
+        this.objectTypeId = objectTypeId;
+        this.parentObjectId = parentObjectId;
+    }
+
 //    public ObjectType getObjectType() {
 //        return DBComponent.objectTypeRepository().findById(objectTypeId).orElseThrow();
 //

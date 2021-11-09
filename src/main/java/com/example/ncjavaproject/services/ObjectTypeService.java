@@ -33,4 +33,8 @@ public class ObjectTypeService {
     public void deleteObjectType(Long id) {
         repository.findById(id);
     }
+
+    public boolean existsById(Long id) {
+        return repository.existsById(id);
+    }
 }

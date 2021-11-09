@@ -20,23 +20,23 @@ public class ObjectTypeController {
     }
 
     @GetMapping("{id}")
-    public ObjectType get(@PathVariable Long id) {
-        return objectTypeRepository
+    public void get(@PathVariable Long id) {
+        objectTypeRepository
                 .findById(id)
                 .orElseThrow(NotFoundException::new);
     }
 
     @PostMapping
-    public ObjectType create(@RequestBody ObjectType objectType) {
-        return objectTypeRepository.save(new ObjectType(
+    public void create(@RequestBody ObjectType objectType) {
+        objectTypeRepository.save(new ObjectType(
                 objectType.getName()
         ));
     }
 
     @PutMapping("{id}")
-    public ObjectType update(@PathVariable Long id, @RequestBody ObjectType objectType) {
+    public void update(@PathVariable Long id, @RequestBody ObjectType objectType) {
         objectType.setId(id); get(id);
-        return objectTypeRepository.save(objectType);
+        objectTypeRepository.save(objectType);
     }
 
     @DeleteMapping("{id}")

@@ -21,11 +21,6 @@ public class ObjectService {
         );
     }
 
-    public void updateObject(ObjectDB object, Long id) {
-        object.setId(id);
-        repository.save(object);
-    }
-
     public void updateObject(ObjectDB object) {
         repository.save(object);
     }
@@ -33,4 +28,14 @@ public class ObjectService {
     public void deleteObject(Long id) {
         repository.findById(id);
     }
+
+    public boolean existsById(Long id) {
+        return repository.existsById(id);
+    }
+
+    public boolean existsByName(String name) {
+        return repository.existsByName(name);
+    }
+
+
 }
