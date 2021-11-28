@@ -8,6 +8,6 @@ import java.util.List;
 public interface AttributeRepository extends CrudRepository<Attribute, Long> {
 
     List<Attribute> findAllByObjectTypeId(Long objectTypeId);
-
+    void deleteAllByObjectTypeId(Long id);
 
 }

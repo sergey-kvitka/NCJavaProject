@@ -1,7 +1,6 @@
 package com.example.ncjavaproject.models;
 
 import com.sun.istack.NotNull;
-import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -32,6 +31,14 @@ public class AttributeType {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "AttributeType{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 
     public enum Type {

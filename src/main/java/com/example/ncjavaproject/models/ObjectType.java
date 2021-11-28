@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "object_type")
 @Getter
@@ -29,47 +30,35 @@ public class ObjectType {
         this.name = name;
     }
 
+    public ObjectType(String name, Long parentObjectTypeId) {
+        this.name = name;
+        this.parentObjectTypeId = parentObjectTypeId;
+    }
+
     public ObjectType(@NotNull String name, @NotNull ObjectType parentObjectType) {
         this.name = name;
         parentObjectTypeId = parentObjectType.getId();
     }
-//    public List<Attribute> getAttributes() {
-//        return DBComponent().attributeRepository.findAllByObjectTypeId(id);
-//    }
-//
-//    public List<Attribute> getAllInheritedAttributes() {
-//        List<Attribute> attributes = this.getAttributes();
-//        DBComponent().objectTypeRepository.findById(parentObjectTypeId).ifPresent(
-//                 parentObjectType -> attributes.addAll(parentObjectType.getAllInheritedAttributes())
-//        );
-//        return attributes;
-//    }
-//
-//    public void addAttributes(List<Attribute> attributes, LightAttribute...lightAttributes) {
-//        List<LightAttribute> currentAttributes = LightAttribute.attributesToLight(this.getAttributes());
-//        List<LightAttribute> newAttributes = (attributes == null
-//                ? new ArrayList<>()
-//                : LightAttribute.attributesToLight(attributes));
-//        if (lightAttributes.length != 0) {
-//            newAttributes.addAll(Arrays.asList(lightAttributes));
-//        }
-//
-//        List<ObjectType> children;
-//
-//        for (LightAttribute newLightAttribute : newAttributes) {
-//            if (!currentAttributes.contains(newLightAttribute)) {
-//                DBComponent().attributeRepository.save(new Attribute(newLightAttribute, this.id));
-//                children = DBComponent().objectTypeRepository.findAllByParentObjectTypeId(this.id);
-//                for (ObjectType child : children) {
-//                    child.addAttributes(null, newLightAttribute);
-//                }
-//            }
-//        }
-//    }
-//
-//    public void addChildObjectType(String childObjectTypeName) {
-//        ObjectType child = DBComponent().objectTypeRepository.save(
-//                new ObjectType(childObjectTypeName, this));
-//
-//    }
- }
+
+    @Override
+    public String toString() {
+        return "ObjectType{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", parentObjectTypeId=" + parentObjectTypeId +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ObjectType that = (ObjectType) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+}

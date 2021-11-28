@@ -2,35 +2,30 @@ package com.example.ncjavaproject.services;
 
 import com.example.ncjavaproject.models.Value;
 import com.example.ncjavaproject.repositories.ValueRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ValueService {
-    @Autowired
-    ValueRepository repository;
+
+    private final ValueRepository valueRepository;
+
+    public ValueService(ValueRepository valueRepository) {
+        this.valueRepository = valueRepository;
+    }
 
     public Iterable<Value> getValues() {
-        return repository.findAll();
+        return valueRepository.findAll();
     }
 
     public Value getValue(Long id) {
-        return (repository
-                .findById(id)
-                .orElse(null)
-        );
-    }
-
-    public void updateValue(Value value, Long id) {
-        value.setId(id);
-        repository.save(value);
+        return (valueRepository.findById(id).orElse(null));
     }
 
     public void updateValue(Value value) {
-        repository.save(value);
+        valueRepository.save(value);
     }
 
     public void deleteValue(Long id) {
-        repository.findById(id);
+        valueRepository.deleteById(id);
     }
 }

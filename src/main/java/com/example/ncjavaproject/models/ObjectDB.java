@@ -1,22 +1,22 @@
 package com.example.ncjavaproject.models;
 
-import com.sun.istack.NotNull;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "object")
 @Setter
 @Getter
 @CrossOrigin
 @NoArgsConstructor
-public class ObjectDB {
+public class ObjectDB implements Comparable<ObjectDB> {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
@@ -28,60 +28,42 @@ public class ObjectDB {
     @Column(name = "parent_object_id")
     private Long parentObjectId = null;
 
-    public ObjectDB(@NotNull String name, @NotNull ObjectType objectType) {
-        this.name = name;
-        objectTypeId = objectType.getId();
-    }
-
-    public ObjectDB(@NotNull String name, @NotNull Long objectTypeId) {
+    public ObjectDB(String name, Long objectTypeId) {
         this.name = name;
         this.objectTypeId = objectTypeId;
     }
 
-    public ObjectDB(@NotNull String name, @NotNull ObjectType objectType, @NotNull ObjectDB parentObject) {
-        this.name = name;
-        objectTypeId = objectType.getId();
-        parentObjectId = parentObject.getId();
-    }
-
-    public ObjectDB(@NotNull String name, @NotNull Long objectTypeId, @NotNull Long parentObjectId) {
+    public ObjectDB(String name, Long objectTypeId, Long parentObjectId) {
         this.name = name;
         this.objectTypeId = objectTypeId;
         this.parentObjectId = parentObjectId;
     }
 
-//    public ObjectType getObjectType() {
-//        return DBComponent.objectTypeRepository().findById(objectTypeId).orElseThrow();
-//
-//    }
+    @Override
+    public String toString() {
+        return "ObjectDB{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", objectTypeId=" + objectTypeId +
+                ", parentObjectId=" + parentObjectId +
+                '}';
+    }
 
-//    public List<Attribute> getAttributes() {
-//        return getObjectType().getAttributes();
-//    }
-//
-//    public List<Attribute> getAllInheritedAttributes() {
-//        return getObjectType().getAllInheritedAttributes();
-//    }
-//
-//    public void addAttributes(List<Attribute> attributes, LightAttribute...lightAttributes) {
-//        getObjectType().addAttributes(attributes, lightAttributes);
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ObjectDB objectDB = (ObjectDB) o;
+        return Objects.equals(name, objectDB.name);
+    }
 
-//    public void addValue(Attribute attribute, String value) {
-//        if (attribute.getAttributeType().equals(AttributeType.Type.LINK)) throw new IllegalArgumentException();
-//        DBComponent().valueRepository.save(new Value(this, attribute, value));
-//    }
-//
-//    public void addValue(Attribute attribute, Date dateValue) {
-//        if (attribute.getAttributeType().equals(AttributeType.Type.LINK)) throw new IllegalArgumentException();
-//        DBComponent().valueRepository.save(new Value(this, attribute, dateValue));
-//    }
-//
-//    public void addValue(Attribute attribute, ObjectDB objectValue) {
-//        if (attribute.getAttributeType().equals(AttributeType.Type.TEXT)) throw new IllegalArgumentException();
-//        DBComponent().linkValueRepository.save(new LinkValue(this, attribute, objectValue));
-//    }
-//    public void addChildObject() {
-//
-//    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
+    public int compareTo(ObjectDB object) {
+        return this.name.compareTo(object.getName());
+    }
 }

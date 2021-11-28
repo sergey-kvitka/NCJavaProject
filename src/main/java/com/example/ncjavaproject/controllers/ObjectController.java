@@ -6,7 +6,7 @@ import com.example.ncjavaproject.services.ObjectTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
+import java.util.List;
 
 
 @RestController
@@ -14,10 +14,13 @@ import java.util.Collections;
 @RequestMapping("objects")
 public class ObjectController {
 
-    @Autowired
-    private ObjectService service;
-    @Autowired
-    ObjectTypeService objectTypeService;
+    private final ObjectService service;
+    private final ObjectTypeService objectTypeService;
+
+    public ObjectController(ObjectService service, ObjectTypeService objectTypeService) {
+        this.service = service;
+        this.objectTypeService = objectTypeService;
+    }
 
     @GetMapping
     public Iterable<ObjectDB> getObjects() {
@@ -27,7 +30,7 @@ public class ObjectController {
     @PostMapping("/add_new")
     public void addObject(@RequestBody ObjectDB object) {
         service.updateObject(new ObjectDB(
-                object.getName(),
+                object.getName().trim(),
                 object.getObjectTypeId(),
                 object.getParentObjectId()
         ));
@@ -50,7 +53,7 @@ public class ObjectController {
                                     @PathVariable("objectTypeId") String objectTypeIdStr,
                                     @PathVariable("parentObjectId") String parentObjectIdStr) {
         name = name.trim();
-        if ("".equals(name)) return Collections.singleton("Name can't be empty string.");
+        if ("".equals(name)) return List.of("Name can't be empty string.");
         long objectTypeId;
         Long parentObjectId;
 
@@ -60,20 +63,18 @@ public class ObjectController {
             objectTypeId = Long.parseLong(objectTypeIdStr);
         }
         catch (NumberFormatException e) {
-            return singleton("Object type ID and parent object ID must be numbers.");
+            return List.of("Object type ID and parent object ID must be numbers.");
         }
 
         if (service.existsByName(name))
-            return singleton("Object with such name already exists.");
+            return List.of("Object with such name already exists.");
+
         if (!objectTypeService.existsById(objectTypeId))
-            return singleton("Object type with ID " + objectTypeId + " doesn't exist.");
+            return List.of("Object type with ID " + objectTypeId + " doesn't exist.");
+
         if (parentObjectId != null && !service.existsById(parentObjectId))
-            return singleton("Parent object with ID " + parentObjectId + " doesn't exist.");
+            return List.of("Parent object with ID " + parentObjectId + " doesn't exist.");
 
-        return singleton("true");
-    }
-
-    private Iterable<String> singleton(String string) {
-        return Collections.singleton(string);
+        return List.of("true");
     }
 }

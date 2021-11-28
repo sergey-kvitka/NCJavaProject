@@ -1,13 +1,12 @@
 package com.example.ncjavaproject.models;
 
-import com.sun.istack.NotNull;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Setter
@@ -16,7 +15,8 @@ import javax.persistence.*;
 @CrossOrigin
 public class Attribute {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
@@ -28,32 +28,32 @@ public class Attribute {
     @Column(nullable = false, name = "object_type_id")
     private Long objectTypeId;
 
-    public Attribute(String name, @NotNull AttributeType attributeType, @NotNull ObjectType objectType) {
-        this.name = name;
-        attributeTypeId = attributeType.getId();
-        objectTypeId = objectType.getId();
-    }
-
     public Attribute(String name, Long attributeTypeId, Long objectTypeId) {
         this.name = name;
         this.attributeTypeId = attributeTypeId;
         this.objectTypeId = objectTypeId;
     }
 
-    public Attribute(@NotNull LightAttribute lightAttribute, @NotNull ObjectType objectType) {
-        objectTypeId = objectType.getId();
-        this.name = lightAttribute.getName();
-        attributeTypeId = lightAttribute.getAttributeTypeId();
+    @Override
+    public String toString() {
+        return "Attribute{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", attributeTypeId=" + attributeTypeId +
+                ", objectTypeId=" + objectTypeId +
+                '}';
     }
 
-    public Attribute(@NotNull LightAttribute lightAttribute, @NotNull Long objectTypeId) {
-        this.objectTypeId = objectTypeId;
-        this.name = lightAttribute.getName();
-        attributeTypeId = lightAttribute.getAttributeTypeId();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Attribute attribute = (Attribute) o;
+        return Objects.equals(name, attribute.name);
     }
 
-//    public AttributeType.Type getAttributeType() {
-//        AttributeType attributeType = DBComponent().attributeTypeRepository.findById(attributeTypeId).orElseThrow();
-//        return AttributeType.Type.valueOf(attributeType.getName());
-//    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

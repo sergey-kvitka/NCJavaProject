@@ -1,46 +1,72 @@
 package com.example.ncjavaproject.controllers;
 
-import com.example.ncjavaproject.exceptions.NotFoundException;
-import com.example.ncjavaproject.models.ObjectDB;
 import com.example.ncjavaproject.models.ObjectType;
-import com.example.ncjavaproject.repositories.ObjectTypeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.ncjavaproject.services.ObjectTypeService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("object_types")
 public class ObjectTypeController {
-    @Autowired
-    ObjectTypeRepository objectTypeRepository;
+
+    private final ObjectTypeService service;
+
+    public ObjectTypeController(ObjectTypeService service) {
+        this.service = service;
+    }
 
     @GetMapping
     public Iterable<ObjectType> getObjectTypes() {
-        return objectTypeRepository.findAll();
+        return service.getObjectTypes();
     }
 
     @GetMapping("{id}")
-    public void get(@PathVariable Long id) {
-        objectTypeRepository
-                .findById(id)
-                .orElseThrow(NotFoundException::new);
+    public ObjectType get(@PathVariable String id) {
+        if ("null".equals(id)) return null;
+        return service.getObjectType(Long.parseLong(id));
     }
 
-    @PostMapping
+    @GetMapping("/getChildrenByParentId/{id}")
+    public Iterable<ObjectType> getObjectTypesByParentId(@PathVariable(value = "id") String id) {
+        if ("null".equals(id)) return service.getObjectTypesByParentId(null);
+        try {
+            return service.getObjectTypesByParentId(Long.parseLong(id));
+        } catch (NumberFormatException e) {
+            return List.of();
+        }
+    }
+
+    @GetMapping("/getObjectTypeWithAllChildren/{id}")
+    public List<ObjectType> getObjectTypeWithAllChildren(@PathVariable(value = "id") Long id) {
+        List<ObjectType> objectTypes = service.getObjectTypeAndAllChildren(id);
+        System.out.println(objectTypes);
+        return objectTypes;
+    }
+
+    @PostMapping("/add_new")
     public void create(@RequestBody ObjectType objectType) {
-        objectTypeRepository.save(new ObjectType(
-                objectType.getName()
+        service.updateObjectType(new ObjectType(
+                objectType.getName(),
+                objectType.getParentObjectTypeId()
         ));
     }
 
-    @PutMapping("{id}")
+    @PutMapping("{id}/edit")
     public void update(@PathVariable Long id, @RequestBody ObjectType objectType) {
-        objectType.setId(id); get(id);
-        objectTypeRepository.save(objectType);
+        objectType.setId(id);
+        service.updateObjectType(objectType);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("{id}/delete")
     public void delete(@PathVariable Long id) {
-        get(id); objectTypeRepository.deleteById(id);
+        service.deleteObjectType(id);
+    }
+
+    @DeleteMapping("deleteAllWithRootId/{id}")
+    public void deleteAllWithRootId(@PathVariable(value = "id") Long id) {
+        service.deleteAllWithRootId(id);
+//        service.deleteObjectType(id);
     }
 }

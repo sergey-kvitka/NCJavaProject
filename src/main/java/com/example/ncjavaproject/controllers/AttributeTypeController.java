@@ -1,17 +1,20 @@
 package com.example.ncjavaproject.controllers;
 
-import com.example.ncjavaproject.exceptions.NotFoundException;
+
 import com.example.ncjavaproject.models.AttributeType;
 import com.example.ncjavaproject.repositories.AttributeTypeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("attribute_types")
 public class AttributeTypeController {
-    @Autowired
-    AttributeTypeRepository attributeTypeRepository;
+
+    private final AttributeTypeRepository attributeTypeRepository;
+
+    public AttributeTypeController(AttributeTypeRepository attributeTypeRepository) {
+        this.attributeTypeRepository = attributeTypeRepository;
+    }
 
     @GetMapping
     public Iterable<AttributeType> getAttributeTypes() {
@@ -22,7 +25,7 @@ public class AttributeTypeController {
     public AttributeType get(@PathVariable Long id) {
         return attributeTypeRepository
                 .findById(id)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow();
     }
 
     @PostMapping

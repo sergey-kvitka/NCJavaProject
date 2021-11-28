@@ -1,6 +1,5 @@
 package com.example.ncjavaproject.controllers;
 
-import com.example.ncjavaproject.exceptions.NotFoundException;
 import com.example.ncjavaproject.models.Value;
 import com.example.ncjavaproject.repositories.ValueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class ValueController {
     public Value get(@PathVariable Long id) {
         return valueRepository
                 .findById(id)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow();
     }
 
     @PostMapping

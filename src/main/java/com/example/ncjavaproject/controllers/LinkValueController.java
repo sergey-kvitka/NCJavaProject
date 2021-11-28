@@ -1,6 +1,5 @@
 package com.example.ncjavaproject.controllers;
 
-import com.example.ncjavaproject.exceptions.NotFoundException;
 import com.example.ncjavaproject.models.AttributeType;
 import com.example.ncjavaproject.models.LinkValue;
 import com.example.ncjavaproject.repositories.LinkValueRepository;
@@ -23,7 +22,7 @@ public class LinkValueController {
     public LinkValue get(@PathVariable Long id) {
         return linkValueRepository
                 .findById(id)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow();
     }
 
     @PostMapping

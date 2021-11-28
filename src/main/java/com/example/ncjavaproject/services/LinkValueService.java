@@ -2,35 +2,30 @@ package com.example.ncjavaproject.services;
 
 import com.example.ncjavaproject.models.LinkValue;
 import com.example.ncjavaproject.repositories.LinkValueRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LinkValueService {
-    @Autowired
-    LinkValueRepository repository;
+
+    private final LinkValueRepository linkValueRepository;
+
+    public LinkValueService(LinkValueRepository linkValueRepository) {
+        this.linkValueRepository = linkValueRepository;
+    }
 
     public Iterable<LinkValue> getLinkValues() {
-        return repository.findAll();
+        return linkValueRepository.findAll();
     }
 
     public LinkValue getLinkValue(Long id) {
-        return (repository
-                .findById(id)
-                .orElse(null)
-        );
-    }
-
-    public void updateLinkValue(LinkValue linkValue, Long id) {
-        linkValue.setId(id);
-        repository.save(linkValue);
+        return (linkValueRepository.findById(id).orElse(null));
     }
 
     public void updateLinkValue(LinkValue linkValue) {
-        repository.save(linkValue);
+        linkValueRepository.save(linkValue);
     }
 
     public void deleteLinkValue(Long id) {
-        repository.findById(id);
+        linkValueRepository.deleteById(id);
     }
 }

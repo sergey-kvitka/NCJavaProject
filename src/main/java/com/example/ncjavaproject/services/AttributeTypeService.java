@@ -2,35 +2,31 @@ package com.example.ncjavaproject.services;
 
 import com.example.ncjavaproject.models.AttributeType;
 import com.example.ncjavaproject.repositories.AttributeTypeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AttributeTypeService {
-    @Autowired
-    AttributeTypeRepository repository;
+
+    private final AttributeTypeRepository attributeTypeRepository;
+
+    public AttributeTypeService(AttributeTypeRepository validateAttribute) {
+        this.attributeTypeRepository = validateAttribute;
+    }
 
     public Iterable<AttributeType> getAttributeTypes() {
-        return repository.findAll();
+        return attributeTypeRepository.findAll();
     }
 
     public AttributeType getAttributeType(Long id) {
-        return (repository
-                .findById(id)
-                .orElse(null)
-        );
-    }
-
-    public void updateAttributeType(AttributeType attributeType, Long id) {
-        attributeType.setId(id);
-        repository.save(attributeType);
+        return (attributeTypeRepository.findById(id).orElse(null));
     }
 
     public void updateAttributeType(AttributeType attributeType) {
-        repository.save(attributeType);
+        attributeTypeRepository.save(attributeType);
     }
 
     public void deleteAttributeType(Long id) {
-        repository.findById(id);
+        attributeTypeRepository.deleteById(id);
     }
 }
+

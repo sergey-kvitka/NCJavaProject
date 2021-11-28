@@ -1,47 +1,68 @@
 package com.example.ncjavaproject.controllers;
 
-import com.example.ncjavaproject.exceptions.NotFoundException;
 import com.example.ncjavaproject.models.Attribute;
-import com.example.ncjavaproject.repositories.AttributeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.ncjavaproject.services.AttributeService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("attributes")
 public class AttributeController {
-    @Autowired
-    AttributeRepository attributeRepository;
+
+    private final AttributeService service;
+
+    public AttributeController(AttributeService service) {
+        this.service = service;
+    }
 
     @GetMapping
     public Iterable<Attribute> getAttributes() {
-        return attributeRepository.findAll();
+        return service.getAttributes();
     }
 
     @GetMapping("{id}")
     public Attribute get(@PathVariable Long id) {
-        return attributeRepository
-                .findById(id)
-                .orElseThrow(NotFoundException::new);
+        return service.getAttribute(id);
     }
 
-    @PostMapping
-    public Attribute create(@RequestBody Attribute attribute) {
-        return attributeRepository.save(new Attribute(
+    @PostMapping("/add_new")
+    public void create(@RequestBody Attribute attribute) {
+        service.updateAttribute(new Attribute(
                 attribute.getName(),
                 attribute.getAttributeTypeId(),
                 attribute.getObjectTypeId()
         ));
     }
 
-    @PutMapping("{id}")
-    public Attribute update(@PathVariable Long id, @RequestBody Attribute attribute) {
-        attribute.setId(id); get(id);
-        return attributeRepository.save(attribute);
+    @PutMapping("{id}/edit")
+    public void update(@PathVariable Long id, @RequestBody Attribute attribute) {
+        attribute.setId(id);
+        attribute.setName(attribute.getName().trim());
+        service.updateAttribute(attribute);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("{id}/delete")
     public void delete(@PathVariable Long id) {
-        get(id); attributeRepository.deleteById(id);
+        service.deleteAttribute(id);
+    }
+
+    @GetMapping("getAttributesByObjectTypeId/{id}")
+    public Iterable<Attribute> getAttributesByObjectTypeId(@PathVariable Long id) {
+        return service.getAllAttributesIncludingParents(id);
+    }
+
+    @GetMapping("isAvailableAttribute/{name}/{objectTypeId}")
+    public boolean isAvailableAttribute(@PathVariable String name, @PathVariable Long objectTypeId) {
+        return validateAttribute(name, objectTypeId);
+    }
+
+    @GetMapping("validate_attribute/{name}/{objectTypeId}")
+    public boolean validateAttribute(
+            @PathVariable String name,
+            @PathVariable Long objectTypeId)
+    {
+        return service.validate(name.trim(), objectTypeId);
     }
 }
