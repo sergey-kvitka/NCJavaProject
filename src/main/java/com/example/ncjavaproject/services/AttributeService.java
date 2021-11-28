@@ -77,6 +77,7 @@ public class AttributeService {
      * в базу данных с данным ID объектного типа
      */
     public boolean validate(String attributeName, Long objectTypeId) {
+        if (!objectTypeRepository.existsById(objectTypeId)) return false;
         Attribute attribute = new Attribute(); attribute.setName(attributeName);
         return ! getAllAttributesIncludingParents(objectTypeId).contains(attribute);
     }

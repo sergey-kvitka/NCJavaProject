@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ObjectTypeRepository extends CrudRepository<ObjectType, Long> {
     List<ObjectType> findAllByParentObjectTypeId(Long id);
+    boolean existsByName(String name);
 
 }

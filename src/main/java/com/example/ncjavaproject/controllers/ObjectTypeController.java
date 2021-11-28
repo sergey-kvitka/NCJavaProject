@@ -67,6 +67,13 @@ public class ObjectTypeController {
     @DeleteMapping("deleteAllWithRootId/{id}")
     public void deleteAllWithRootId(@PathVariable(value = "id") Long id) {
         service.deleteAllWithRootId(id);
-//        service.deleteObjectType(id);
+        service.deleteObjectType(id);
+    }
+
+    @GetMapping("validate_object_type/{name}")
+    public boolean validate(@PathVariable String name) {
+        ObjectType ot = new ObjectType();
+        ot.setName(name.trim());
+        return service.validate(ot);
     }
 }

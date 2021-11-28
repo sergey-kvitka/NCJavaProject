@@ -16,4 +16,5 @@ public class NCJavaProject {
     public static void main(String[] args) {
         SpringApplication.run(NCJavaProject.class, args);
     }
+
 }

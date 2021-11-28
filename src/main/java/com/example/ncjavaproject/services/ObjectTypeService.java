@@ -1,26 +1,24 @@
 package com.example.ncjavaproject.services;
 
-import com.example.ncjavaproject.models.Attribute;
 import com.example.ncjavaproject.models.ObjectType;
-import com.example.ncjavaproject.repositories.AttributeRepository;
 import com.example.ncjavaproject.repositories.ObjectTypeRepository;
-import lombok.experimental.Wither;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ObjectTypeService {
 
     private final ObjectTypeRepository objectTypeRepository;
-    private final AttributeRepository attributeRepository;
+    private final AttributeService attributeService;
 
     public ObjectTypeService(
             ObjectTypeRepository objectTypeRepository,
-            AttributeRepository attributeRepository)
+            AttributeService attributeService)
     {
         this.objectTypeRepository = objectTypeRepository;
-        this.attributeRepository = attributeRepository;
+        this.attributeService = attributeService;
     }
 
     public Iterable<ObjectType> getObjectTypes() {
@@ -41,6 +39,10 @@ public class ObjectTypeService {
 
     public boolean existsById(Long id) {
         return objectTypeRepository.existsById(id);
+    }
+
+    public boolean validate(ObjectType objectType) {
+        return ! objectTypeRepository.existsByName(objectType.getName());
     }
 
     /**
@@ -74,13 +76,13 @@ public class ObjectTypeService {
      * их атрибуты и сам объектный тип с ID, переданным в качестве параметра
      */
     public void deleteAllWithRootId(Long rootObjectTypeId) {
-        attributeRepository.deleteAllByObjectTypeId(rootObjectTypeId);
+        attributeService.getAttributesByObjectTypeId(rootObjectTypeId).forEach(
+                attribute -> attributeService.deleteAttribute(attribute.getId())
+        );
 
         objectTypeRepository.findAllByParentObjectTypeId(rootObjectTypeId)
         .forEach(
             objectType -> deleteAllWithRootId(objectType.getId())
         );
-
-        objectTypeRepository.deleteById(rootObjectTypeId);
     }
 }

@@ -49,13 +49,23 @@ public class AttributeController {
     }
 
     @GetMapping("getAttributesByObjectTypeId/{id}")
-    public Iterable<Attribute> getAttributesByObjectTypeId(@PathVariable Long id) {
-        return service.getAllAttributesIncludingParents(id);
+    public Iterable<Attribute> getAttributesByObjectTypeId(@PathVariable String id) {
+        if ("null".equals(id)) return new ArrayList<>();
+        try {
+            return service.getAllAttributesIncludingParents(Long.parseLong(id));
+        } catch (NumberFormatException e) {
+            return new ArrayList<>();
+        }
     }
 
     @GetMapping("isAvailableAttribute/{name}/{objectTypeId}")
-    public boolean isAvailableAttribute(@PathVariable String name, @PathVariable Long objectTypeId) {
-        return validateAttribute(name, objectTypeId);
+    public boolean isAvailableAttribute(@PathVariable String name, @PathVariable String objectTypeId) {
+        if ("null".equals(objectTypeId)) return false;
+        try {
+            return validateAttribute(name, Long.parseLong(objectTypeId));
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     @GetMapping("validate_attribute/{name}/{objectTypeId}")
