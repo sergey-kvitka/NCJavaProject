@@ -6,6 +6,7 @@ import com.example.ncjavaproject.services.ObjectTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,6 +26,16 @@ public class ObjectController {
     @GetMapping
     public Iterable<ObjectDB> getObjects() {
         return service.getObjects();
+    }
+
+    @GetMapping("{id}")
+    public ObjectDB getObject(@PathVariable("id") String id) {
+        if ("null".equals(id)) return null;
+        try {
+            return service.getObject(Long.parseLong(id));
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     @PostMapping("/add_new")
@@ -77,4 +88,15 @@ public class ObjectController {
 
         return List.of("true");
     }
+
+        @GetMapping("get_objects_by_object_type_id_with_children/{id}")
+    public List<ObjectDB> getObjectsByObjectTypeIdWithChildren(@PathVariable("id") String objectTypeId) {
+        if ("null".equals(objectTypeId)) return new ArrayList<>();
+        try {
+            return service.getObjectsByObjectTypeIdWithChildren(Long.parseLong(objectTypeId));
+        } catch (NumberFormatException e) {
+            return new ArrayList<>();
+        }
+    }
+
 }

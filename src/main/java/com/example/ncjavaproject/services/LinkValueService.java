@@ -4,6 +4,8 @@ import com.example.ncjavaproject.models.LinkValue;
 import com.example.ncjavaproject.repositories.LinkValueRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LinkValueService {
 
@@ -27,5 +29,17 @@ public class LinkValueService {
 
     public void deleteLinkValue(Long id) {
         linkValueRepository.deleteById(id);
+    }
+
+    public List<LinkValue> getLinkValuesByObjectId(Long id) {
+        return linkValueRepository.findAllByObjectId(id);
+    }
+
+    public void deleteByAttributeId(Long attributeId) {
+        linkValueRepository.deleteByAttributeId(attributeId);
+    }
+
+    public void deleteByObjectIdAndAttributeId(Long objectId, Long attributeId) {
+        linkValueRepository.deleteByObjectIdAndAttributeId(objectId, attributeId);
     }
 }

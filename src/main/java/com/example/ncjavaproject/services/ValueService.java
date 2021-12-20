@@ -4,6 +4,8 @@ import com.example.ncjavaproject.models.Value;
 import com.example.ncjavaproject.repositories.ValueRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ValueService {
 
@@ -27,5 +29,17 @@ public class ValueService {
 
     public void deleteValue(Long id) {
         valueRepository.deleteById(id);
+    }
+
+    public List<Value> getValuesByObjectId(Long id) {
+        return valueRepository.findAllByObjectId(id);
+    }
+
+    public void deleteByAttributeId(Long attributeId) {
+        valueRepository.deleteByAttributeId(attributeId);
+    }
+
+    public void deleteByObjectIdAndAttributeId( Long objectId, Long attributeId) {
+        valueRepository.deleteByObjectIdAndAttributeId(objectId, attributeId);
     }
 }

@@ -42,6 +42,13 @@ public class AttributeService {
         attributeRepository.deleteAllByObjectTypeId(id);
     }
 
+    public void setAttributeType(Long attributeTypeId, Long attributeId) {
+        Attribute attribute = attributeRepository.findById(attributeId).orElse(null);
+        if (attribute == null) throw new IllegalArgumentException();
+        attribute.setAttributeTypeId(attributeTypeId);
+        attributeRepository.save(attribute);
+    }
+
     /**
      * Принимает ID объектного типа и возвращает все его атрибуты, не включая атрибуты родителей
      */
@@ -53,6 +60,7 @@ public class AttributeService {
      * Принимает ID объектного типа и возвращает все его атрибуты,
      * а также все атрибуты родителей этого объектного типа
      */
+    @Deprecated
     public List<Attribute> getAllAttributesIncludingParents(Long objectTypeId) {
         List<Attribute> attributes = new ArrayList<>(getAttributesByObjectTypeId(objectTypeId));
 
@@ -76,9 +84,11 @@ public class AttributeService {
      * его родителей. Возвращает {@code true}, если такой атрибут можно занести
      * в базу данных с данным ID объектного типа
      */
+    @Deprecated
     public boolean validate(String attributeName, Long objectTypeId) {
         if (!objectTypeRepository.existsById(objectTypeId)) return false;
-        Attribute attribute = new Attribute(); attribute.setName(attributeName);
+        Attribute attribute = new Attribute();
+        attribute.setName(attributeName);
         return ! getAllAttributesIncludingParents(objectTypeId).contains(attribute);
     }
 

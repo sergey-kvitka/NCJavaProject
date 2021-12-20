@@ -1,48 +1,72 @@
 package com.example.ncjavaproject.controllers;
 
-import com.example.ncjavaproject.models.AttributeType;
 import com.example.ncjavaproject.models.LinkValue;
-import com.example.ncjavaproject.repositories.LinkValueRepository;
+import com.example.ncjavaproject.models.Value;
+import com.example.ncjavaproject.services.AttributeService;
+import com.example.ncjavaproject.services.LinkValueService;
+import com.example.ncjavaproject.services.ValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("link_values")
 public class LinkValueController {
-    @Autowired
-    LinkValueRepository linkValueRepository;
+    private final LinkValueService service;
+    private final ValueService valueService;
+    private final AttributeService attributeService;
+
+    public LinkValueController(LinkValueService service, AttributeService attributeService, ValueService valueService) {
+        this.valueService = valueService;
+        this.service = service;
+        this.attributeService = attributeService;
+    }
 
     @GetMapping
     public Iterable<LinkValue> getLinkValues() {
-        return linkValueRepository.findAll();
+        return service.getLinkValues();
     }
 
     @GetMapping("{id}")
     public LinkValue get(@PathVariable Long id) {
-        return linkValueRepository
-                .findById(id)
-                .orElseThrow();
+        return service.getLinkValue(id);
     }
 
-    @PostMapping
-    public LinkValue create(
-            @RequestBody LinkValue linkValue) {
-        return linkValueRepository.save(new LinkValue(
+    @PostMapping("add_new")
+    @Transactional
+    public void create(@RequestBody LinkValue linkValue) {
+        LinkValue newValue = new LinkValue(
                 linkValue.getObjectId(),
                 linkValue.getAttributeId(),
                 linkValue.getValueObjectId()
-        ));
+        );
+        service.deleteByObjectIdAndAttributeId(newValue.getObjectId(), newValue.getAttributeId());
+        valueService.deleteByObjectIdAndAttributeId(newValue.getObjectId(), newValue.getAttributeId());
+        attributeService.setAttributeType(2L, newValue.getAttributeId());
+        service.updateLinkValue(newValue);
     }
 
     @PutMapping("{id}")
-    public LinkValue update(@PathVariable Long id, @RequestBody LinkValue linkValue) {
-        linkValue.setId(id); get(id);
-        return linkValueRepository.save(linkValue);
+    public void update(@PathVariable Long id, @RequestBody LinkValue linkValue) {
+        linkValue.setId(id);
+        service.updateLinkValue(linkValue);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id) {
-        get(id); linkValueRepository.deleteById(id);
+        service.deleteLinkValue(id);
+    }
+
+    @DeleteMapping("{id}/delete_by_attribute_id")
+    public void deleteByAttributeId(@PathVariable Long id) {
+        service.deleteByAttributeId(id);
+    }
+
+    @GetMapping("get_by_object_id/{id}")
+    public List<LinkValue> getLinkValuesByObjectId(@PathVariable Long id) {
+        return service.getLinkValuesByObjectId(id);
     }
 }

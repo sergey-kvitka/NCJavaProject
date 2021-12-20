@@ -2,17 +2,20 @@ package com.example.ncjavaproject.services;
 
 import com.example.ncjavaproject.models.ObjectDB;
 import com.example.ncjavaproject.repositories.ObjectRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ObjectService {
 
+    private final ObjectTypeService objectTypeService;
     private final ObjectRepository objectRepository;
 
-    public ObjectService(ObjectRepository objectRepository) {
+    public ObjectService(ObjectTypeService objectTypeService, ObjectRepository objectRepository) {
+        this.objectTypeService = objectTypeService;
         this.objectRepository = objectRepository;
     }
 
@@ -42,4 +45,16 @@ public class ObjectService {
         return objectRepository.existsByName(name);
     }
 
+    public List<ObjectDB> getObjectsByObjectTypeId(Long objectTypeId) {
+        return objectRepository.findAllByObjectTypeId(objectTypeId);
+    }
+
+    public List<ObjectDB> getObjectsByObjectTypeIdWithChildren(Long objectTypeId) {
+        return objectTypeService.getObjectTypeAndAllChildren(objectTypeId)
+                .stream()
+                .map(objectType -> getObjectsByObjectTypeId(objectType.getId()))
+                .flatMap(Collection::stream)
+                .distinct()
+                .collect(Collectors.toList());
+    }
 }

@@ -59,30 +59,6 @@ public class ObjectTypeService {
      * передан в качестве параметра
      */
     public List<ObjectType> getObjectTypeAndAllChildren(Long objectTypeId) {
-        List<ObjectType> objectTypes = getObjectTypesByParentId(objectTypeId);
-        List<ObjectType> objectTypesChildren = new ArrayList<>();
-
-        objectTypes.forEach(
-            objectType -> objectTypesChildren.addAll(getObjectTypeAndAllChildren(objectType.getId()))
-        );
-
-        objectTypes.add(0, getObjectType(objectTypeId));
-        objectTypes.addAll(objectTypesChildren);
-        return objectTypes;
-    }
-
-    /**
-     * Принимает ID объектного типа и удаляет всех прямых и непрямых потомков, все
-     * их атрибуты и сам объектный тип с ID, переданным в качестве параметра
-     */
-    public void deleteAllWithRootId(Long rootObjectTypeId) {
-        attributeService.getAttributesByObjectTypeId(rootObjectTypeId).forEach(
-                attribute -> attributeService.deleteAttribute(attribute.getId())
-        );
-
-        objectTypeRepository.findAllByParentObjectTypeId(rootObjectTypeId)
-        .forEach(
-            objectType -> deleteAllWithRootId(objectType.getId())
-        );
+        return objectTypeRepository.findObjectTypeWithParents(objectTypeId);
     }
 }

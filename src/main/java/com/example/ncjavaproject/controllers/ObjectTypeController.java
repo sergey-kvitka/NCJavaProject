@@ -25,7 +25,11 @@ public class ObjectTypeController {
     @GetMapping("{id}")
     public ObjectType get(@PathVariable String id) {
         if ("null".equals(id)) return null;
-        return service.getObjectType(Long.parseLong(id));
+        try {
+            return service.getObjectType(Long.parseLong(id));
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     @GetMapping("/getChildrenByParentId/{id}")
@@ -66,14 +70,13 @@ public class ObjectTypeController {
 
     @DeleteMapping("deleteAllWithRootId/{id}")
     public void deleteAllWithRootId(@PathVariable(value = "id") Long id) {
-        service.deleteAllWithRootId(id);
         service.deleteObjectType(id);
     }
 
     @GetMapping("validate_object_type/{name}")
     public boolean validate(@PathVariable String name) {
-        ObjectType ot = new ObjectType();
-        ot.setName(name.trim());
-        return service.validate(ot);
+        ObjectType objectType = new ObjectType();
+        objectType.setName(name.trim());
+        return service.validate(objectType);
     }
 }

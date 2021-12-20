@@ -49,7 +49,7 @@ public class AttributeController {
     }
 
     @GetMapping("getAttributesByObjectTypeId/{id}")
-    public Iterable<Attribute> getAttributesByObjectTypeId(@PathVariable String id) {
+    public Iterable<Attribute> getAttributesByObjectTypeId(@PathVariable String id){
         if ("null".equals(id)) return new ArrayList<>();
         try {
             return service.getAllAttributesIncludingParents(Long.parseLong(id));
