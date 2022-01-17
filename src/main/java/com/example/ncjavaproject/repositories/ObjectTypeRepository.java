@@ -1,6 +1,6 @@
 package com.example.ncjavaproject.repositories;
 
-import com.example.ncjavaproject.models.ObjectType;
+import com.example.ncjavaproject.entities.ObjectType;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

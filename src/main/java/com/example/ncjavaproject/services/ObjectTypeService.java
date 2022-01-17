@@ -1,10 +1,9 @@
 package com.example.ncjavaproject.services;
 
-import com.example.ncjavaproject.models.ObjectType;
+import com.example.ncjavaproject.entities.ObjectType;
 import com.example.ncjavaproject.repositories.ObjectTypeRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

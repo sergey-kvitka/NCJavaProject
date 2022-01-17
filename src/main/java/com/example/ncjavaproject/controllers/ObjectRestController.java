@@ -1,9 +1,8 @@
 package com.example.ncjavaproject.controllers;
 
-import com.example.ncjavaproject.models.ObjectDB;
+import com.example.ncjavaproject.entities.ObjectDB;
 import com.example.ncjavaproject.services.ObjectService;
 import com.example.ncjavaproject.services.ObjectTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -13,12 +12,12 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("objects")
-public class ObjectController {
+public class ObjectRestController {
 
     private final ObjectService service;
     private final ObjectTypeService objectTypeService;
 
-    public ObjectController(ObjectService service, ObjectTypeService objectTypeService) {
+    public ObjectRestController(ObjectService service, ObjectTypeService objectTypeService) {
         this.service = service;
         this.objectTypeService = objectTypeService;
     }
@@ -61,8 +60,8 @@ public class ObjectController {
 
     @GetMapping("/isAvailableObject/{name}/{objectTypeId}/{parentObjectId}")
     public Iterable<String> isAvailableObject(@PathVariable("name") String name,
-                                    @PathVariable("objectTypeId") String objectTypeIdStr,
-                                    @PathVariable("parentObjectId") String parentObjectIdStr) {
+                                              @PathVariable("objectTypeId") String objectTypeIdStr,
+                                              @PathVariable("parentObjectId") String parentObjectIdStr) {
         name = name.trim();
         if ("".equals(name)) return List.of("Name can't be empty string.");
         long objectTypeId;
@@ -72,8 +71,7 @@ public class ObjectController {
             if ("null".equals(parentObjectIdStr) || "".equals(parentObjectIdStr)) parentObjectId = null;
             else parentObjectId = Long.parseLong(parentObjectIdStr);
             objectTypeId = Long.parseLong(objectTypeIdStr);
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return List.of("Object type ID and parent object ID must be numbers.");
         }
 
@@ -89,7 +87,7 @@ public class ObjectController {
         return List.of("true");
     }
 
-        @GetMapping("get_objects_by_object_type_id_with_children/{id}")
+    @GetMapping("get_objects_by_object_type_id_with_children/{id}")
     public List<ObjectDB> getObjectsByObjectTypeIdWithChildren(@PathVariable("id") String objectTypeId) {
         if ("null".equals(objectTypeId)) return new ArrayList<>();
         try {

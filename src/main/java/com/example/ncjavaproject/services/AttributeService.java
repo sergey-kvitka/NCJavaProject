@@ -1,6 +1,6 @@
 package com.example.ncjavaproject.services;
 
-import com.example.ncjavaproject.models.Attribute;
+import com.example.ncjavaproject.entities.Attribute;
 import com.example.ncjavaproject.repositories.AttributeRepository;
 import com.example.ncjavaproject.repositories.ObjectTypeRepository;
 import org.springframework.stereotype.Service;
@@ -60,7 +60,6 @@ public class AttributeService {
      * Принимает ID объектного типа и возвращает все его атрибуты,
      * а также все атрибуты родителей этого объектного типа
      */
-    @Deprecated
     public List<Attribute> getAllAttributesIncludingParents(Long objectTypeId) {
         List<Attribute> attributes = new ArrayList<>(getAttributesByObjectTypeId(objectTypeId));
 
@@ -91,20 +90,5 @@ public class AttributeService {
         attribute.setName(attributeName);
         return ! getAllAttributesIncludingParents(objectTypeId).contains(attribute);
     }
-
-    @Deprecated
-    public String isAvailableAttribute(String name, Long objectTypeId) {
-        name = name.trim();
-        List<Attribute> attributes = getAllAttributesIncludingParents(objectTypeId);
-        for (Attribute attribute : attributes) {
-            if (name.equals(attribute.getName())) {
-                return "false";
-            }
-        }
-        return "true";
-    }
-
-
-
 }
 

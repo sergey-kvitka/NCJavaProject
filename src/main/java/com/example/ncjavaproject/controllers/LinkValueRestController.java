@@ -1,11 +1,9 @@
 package com.example.ncjavaproject.controllers;
 
-import com.example.ncjavaproject.models.LinkValue;
-import com.example.ncjavaproject.models.Value;
+import com.example.ncjavaproject.entities.LinkValue;
 import com.example.ncjavaproject.services.AttributeService;
 import com.example.ncjavaproject.services.LinkValueService;
 import com.example.ncjavaproject.services.ValueService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -14,12 +12,12 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("link_values")
-public class LinkValueController {
+public class LinkValueRestController {
     private final LinkValueService service;
     private final ValueService valueService;
     private final AttributeService attributeService;
 
-    public LinkValueController(LinkValueService service, AttributeService attributeService, ValueService valueService) {
+    public LinkValueRestController(LinkValueService service, AttributeService attributeService, ValueService valueService) {
         this.valueService = valueService;
         this.service = service;
         this.attributeService = attributeService;

@@ -1,18 +1,18 @@
 package com.example.ncjavaproject.controllers;
 
 
-import com.example.ncjavaproject.models.AttributeType;
+import com.example.ncjavaproject.entities.AttributeType;
 import com.example.ncjavaproject.repositories.AttributeTypeRepository;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("attribute_types")
-public class AttributeTypeController {
+public class AttributeTypeRestController {
 
     private final AttributeTypeRepository attributeTypeRepository;
 
-    public AttributeTypeController(AttributeTypeRepository attributeTypeRepository) {
+    public AttributeTypeRestController(AttributeTypeRepository attributeTypeRepository) {
         this.attributeTypeRepository = attributeTypeRepository;
     }
 

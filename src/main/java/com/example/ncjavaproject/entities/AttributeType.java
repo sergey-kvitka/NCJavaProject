@@ -1,4 +1,4 @@
-package com.example.ncjavaproject.models;
+package com.example.ncjavaproject.entities;
 
 import com.sun.istack.NotNull;
 import lombok.NoArgsConstructor;

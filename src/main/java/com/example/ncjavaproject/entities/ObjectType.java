@@ -1,7 +1,6 @@
-package com.example.ncjavaproject.models;
+package com.example.ncjavaproject.entities;
 
 import com.sun.istack.NotNull;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

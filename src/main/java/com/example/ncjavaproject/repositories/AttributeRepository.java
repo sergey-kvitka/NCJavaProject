@@ -1,6 +1,6 @@
 package com.example.ncjavaproject.repositories;
 
-import com.example.ncjavaproject.models.Attribute;
+import com.example.ncjavaproject.entities.Attribute;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

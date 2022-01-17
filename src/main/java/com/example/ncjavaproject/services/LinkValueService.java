@@ -1,6 +1,6 @@
 package com.example.ncjavaproject.services;
 
-import com.example.ncjavaproject.models.LinkValue;
+import com.example.ncjavaproject.entities.LinkValue;
 import com.example.ncjavaproject.repositories.LinkValueRepository;
 import org.springframework.stereotype.Service;
 

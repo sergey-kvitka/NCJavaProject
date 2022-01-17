@@ -1,6 +1,6 @@
 package com.example.ncjavaproject.services;
 
-import com.example.ncjavaproject.models.AttributeType;
+import com.example.ncjavaproject.entities.AttributeType;
 import com.example.ncjavaproject.repositories.AttributeTypeRepository;
 import org.springframework.stereotype.Service;
 

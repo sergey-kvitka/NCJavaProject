@@ -1,6 +1,6 @@
 package com.example.ncjavaproject.controllers;
 
-import com.example.ncjavaproject.models.Attribute;
+import com.example.ncjavaproject.entities.Attribute;
 import com.example.ncjavaproject.services.AttributeService;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping("attributes")
-public class AttributeController {
+@RequestMapping(value = "attributes")
+public class AttributeRestController {
 
     private final AttributeService service;
 
-    public AttributeController(AttributeService service) {
+    public AttributeRestController(AttributeService service) {
         this.service = service;
     }
 

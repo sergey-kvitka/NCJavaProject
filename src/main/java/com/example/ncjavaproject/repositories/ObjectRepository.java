@@ -1,9 +1,7 @@
 package com.example.ncjavaproject.repositories;
 
-import com.example.ncjavaproject.models.Attribute;
-import com.example.ncjavaproject.models.ObjectDB;
+import com.example.ncjavaproject.entities.ObjectDB;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

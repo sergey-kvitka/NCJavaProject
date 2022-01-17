@@ -1,8 +1,7 @@
 package com.example.ncjavaproject.services;
 
-import com.example.ncjavaproject.models.ObjectDB;
+import com.example.ncjavaproject.entities.ObjectDB;
 import com.example.ncjavaproject.repositories.ObjectRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

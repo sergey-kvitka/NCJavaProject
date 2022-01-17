@@ -1,6 +1,6 @@
 package com.example.ncjavaproject.services;
 
-import com.example.ncjavaproject.models.Value;
+import com.example.ncjavaproject.entities.Value;
 import com.example.ncjavaproject.repositories.ValueRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +21,10 @@ public class ValueService {
 
     public Value getValue(Long id) {
         return (valueRepository.findById(id).orElse(null));
+    }
+
+    public Value getValueByObjectIdAndAttributeId(Long objectId, Long attributeId) {
+        return valueRepository.findByObjectIdAndAttributeId(objectId, attributeId);
     }
 
     public void updateValue(Value value) {

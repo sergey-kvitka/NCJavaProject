@@ -1,6 +1,6 @@
 package com.example.ncjavaproject.repositories;
 
-import com.example.ncjavaproject.models.LinkValue;
+import com.example.ncjavaproject.entities.LinkValue;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

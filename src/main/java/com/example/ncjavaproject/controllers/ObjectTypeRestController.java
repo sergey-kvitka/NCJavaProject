@@ -1,6 +1,6 @@
 package com.example.ncjavaproject.controllers;
 
-import com.example.ncjavaproject.models.ObjectType;
+import com.example.ncjavaproject.entities.ObjectType;
 import com.example.ncjavaproject.services.ObjectTypeService;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,11 +9,11 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("object_types")
-public class ObjectTypeController {
+public class ObjectTypeRestController {
 
     private final ObjectTypeService service;
 
-    public ObjectTypeController(ObjectTypeService service) {
+    public ObjectTypeRestController(ObjectTypeService service) {
         this.service = service;
     }
 
