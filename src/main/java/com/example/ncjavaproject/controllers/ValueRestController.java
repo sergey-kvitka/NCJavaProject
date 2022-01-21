@@ -37,7 +37,6 @@ public class ValueRestController {
     @PostMapping("add_new")
     @Transactional
     public void create(@RequestBody Value value) {
-        System.out.println(value);
         if ("".equals(value.getValue())) value.setValue(null);
         Value newValue = new Value(
                 value.getObjectId(),
@@ -49,7 +48,6 @@ public class ValueRestController {
                         ? value.getDateValue()
                         : null
         );
-        System.out.println(newValue);
         service.deleteByObjectIdAndAttributeId(newValue.getObjectId(), newValue.getAttributeId());
         linkValueService.deleteByObjectIdAndAttributeId(newValue.getObjectId(), newValue.getAttributeId());
         attributeService.setAttributeType(1L, newValue.getAttributeId());

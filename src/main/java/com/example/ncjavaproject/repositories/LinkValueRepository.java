@@ -9,4 +9,5 @@ public interface LinkValueRepository extends CrudRepository<LinkValue, Long> {
     List<LinkValue> findAllByObjectId(Long id);
     void deleteByAttributeId(Long id);
     void deleteByObjectIdAndAttributeId(Long objectId, Long attributeId);
+    LinkValue findByObjectIdAndAttributeId(Long objectId, Long attributeId);
 }

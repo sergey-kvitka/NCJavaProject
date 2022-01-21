@@ -30,4 +30,10 @@ public class OrderService {
     public boolean existsById(Long id) {
         return orderRepository.existsById(id);
     }
+
+    public Order addOrder(Long userId) {
+        Order order = new Order();
+        order.setUserId(userId);
+        return orderRepository.save(order);
+    }
 }

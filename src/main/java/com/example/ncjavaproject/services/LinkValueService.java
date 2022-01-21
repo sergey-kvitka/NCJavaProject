@@ -42,4 +42,8 @@ public class LinkValueService {
     public void deleteByObjectIdAndAttributeId(Long objectId, Long attributeId) {
         linkValueRepository.deleteByObjectIdAndAttributeId(objectId, attributeId);
     }
+
+    public LinkValue getLinkValueByObjectIdAndAttributeId(Long objectId, Long attributeId) {
+        return linkValueRepository.findByObjectIdAndAttributeId(objectId, attributeId);
+    }
 }

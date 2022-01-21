@@ -56,4 +56,8 @@ public class ObjectService {
                 .distinct()
                 .collect(Collectors.toList());
     }
+
+    public List<ObjectDB> getProducts() {
+        return objectRepository.findAllProducts();
+    }
 }

@@ -15,6 +15,9 @@ import java.util.Objects;
 @CrossOrigin
 public class Attribute {
 
+    public static final Long ATTRIBUTE_TYPE_ID_TEXT = 1L;
+    public static final Long ATTRIBUTE_TYPE_ID_LINK = 2L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
